@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div v-if="user">
+    <div v-if="!user">
       <!-- Navigation Bar -->
       <nav-bar> </nav-bar>
       <!-- Navigation drawer -->

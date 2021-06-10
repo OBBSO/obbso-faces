@@ -8,16 +8,18 @@
         sm="8"
         class="d-flex justify-center align-center"
       >
-        <v-card tile min-width="70%">
+        <v-card tile min-width="80%" elevation="10">
           <v-form ref="form" v-model="valid" lazy-validation>
+            <v-card-text></v-card-text>
             <v-card-title class="justify-center display-1">
               Iniciar Sesion
             </v-card-title>
+            <v-card-text></v-card-text>
             <div align="center">
               <v-text-field
                 v-model="username"
                 :rules="[rules.required]"
-                label="Username"
+                label="Usuario"
                 outlined
                 required
                 dense
@@ -36,12 +38,13 @@
             </div>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn :disabled="!valid" color="primary" small @click="validate">
+              <v-btn :disabled="!valid" color="primary" @click="validate">
                 Iniciar Sesion
               </v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
             <br />
+            <v-card-text></v-card-text>
           </v-form>
         </v-card>
       </v-col>
@@ -69,7 +72,7 @@ export default {
 
 <style>
 .background {
-  background-color: white;
+  background-color: #f7f7f7;
 }
 .v-text-field {
   width: 70%;
