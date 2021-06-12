@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app clipped-left flat color="secondary" dark>
+    <v-app-bar app clipped-left flat color="primary" dark>
       <v-btn
         @click="
           mini = !mini;
@@ -32,10 +32,10 @@
 
       <v-spacer></v-spacer>
 
-      <v-menu bottom min-width="20%" rounded offset-y>
+      <!-- <v-menu bottom min-width="20%" rounded offset-y>
         <template v-slot:activator="{ on }">
           <v-btn icon x-large v-on="on">
-            <v-avatar color="primary" size="48">
+            <v-avatar color="white" size="48">
               <span class="white--text text-h5">{{ users.initials }}</span>
             </v-avatar>
           </v-btn>
@@ -57,140 +57,144 @@
             </div>
           </v-list-item-content>
         </v-card>
-      </v-menu>
-      <div align="center"> Hola</div>
+      </v-menu> -->
     </v-app-bar>
+
     <v-navigation-drawer
       app
       clipped
       v-model="drawer"
-      color="secondary"
+      color="white"
+      hide-overlay
       :permanent="$vuetify.breakpoint.mdAndUp"
       :mini-variant.sync="mini"
-      dark
     >
       <v-list dense nav>
-        <v-list-item two-line class="px-0">
-          <v-list-item-avatar>
-            <img src="https://randomuser.me/api/portraits/men/81.jpg" />
-          </v-list-item-avatar>
+        <user-item-list :user="user"></user-item-list>
 
-          <v-list-item-content>
-            <v-list-item-title>Cosme Fulano</v-list-item-title>
-            <v-list-item-subtitle>Admin</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
+        <div v-for="(item, i) in items" :key="i">
+          <v-list-item :to="item.redirect" v-if="!item.children">
+            <v-list-item-icon>
+              <v-icon v-text="item.icon"></v-icon>
+            </v-list-item-icon>
 
-        <v-list-group :value="true" prepend-icon="mdi-account-circle">
-          <template v-slot:activator>
-            <v-list-item-title>Users</v-list-item-title>
-          </template>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.text"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
-          <v-list-group :value="true" no-action sub-group>
+          <v-list-group
+            no-action
+            v-else
+            :value="false"
+            :prepend-icon="item.icon"
+          >
             <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title>Admin</v-list-item-title>
-              </v-list-item-content>
+              <!-- <v-list-item> -->
+              <!-- <v-list-item-content> -->
+              <v-list-item-title v-text="item.text"></v-list-item-title>
+              <!-- </v-list-item-content> -->
+              <!-- </v-list-item> -->
             </template>
 
-            <v-list-item v-for="([title, icon], i) in admins" :key="i" link>
-              <v-list-item-icon>
+            <v-list-item
+              v-for="([title, icon, to], i) in item.children"
+              :to="to"
+              :key="i"
+              link
+            >
+              <!-- <v-list-item-icon>
                 <v-icon v-text="icon"></v-icon>
-              </v-list-item-icon>
+              </v-list-item-icon> -->
               <v-list-item-title v-text="title"></v-list-item-title>
             </v-list-item>
           </v-list-group>
-
-          <v-list-group no-action sub-group>
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title>Actions</v-list-item-title>
-              </v-list-item-content>
-            </template>
-
-            <v-list-item v-for="([title, icon], i) in cruds" :key="i" link>
-              <v-list-item-icon>
-                <v-icon v-text="icon"></v-icon>
-              </v-list-item-icon>
-              <v-list-item-title v-text="title"></v-list-item-title>
-            </v-list-item>
-          </v-list-group>
-        </v-list-group>
-
-        <!-- <v-list-item-group color="primary"> -->
-        <v-list-item
-          v-for="(item, i) in items"
-          link
-          :key="i"
-          :to="item.redirect"
-        >
-          <v-list-item-icon>
-            <v-icon v-text="item.icon"></v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title v-text="item.text"></v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <!-- </v-list-item-group> -->
+        </div>
       </v-list>
     </v-navigation-drawer>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+// import { mapState } from "vuex";
+import UserItemList from "./user/UserItemList.vue";
 export default {
+  components: { UserItemList },
   data: () => ({
     drawer: true,
     mini: true,
-    users: {
-      initials: "JD",
-      fullName: "John Doe",
+    user: {
+      type: "admin",
+      name: "John Doe",
       email: "john.doe@doe.com",
     },
-    initiallyOpen: ["public"],
-    files: {
-      html: "mdi-language-html5",
-      js: "mdi-nodejs",
-      json: "mdi-code-json",
-      md: "mdi-language-markdown",
-      pdf: "mdi-file-pdf",
-      png: "mdi-file-image",
-      txt: "mdi-file-document-outline",
-      xls: "mdi-file-excel",
-    },
-    tree: [],
 
-    admins: [
-      ["Management", "mdi-account-multiple-outline"],
-      ["Settings", "mdi-cog-outline"],
-    ],
-    cruds: [
-      ["Create", "mdi-plus-outline"],
-      ["Read", "mdi-file-outline"],
-      ["Update", "mdi-update"],
-      ["Delete", "mdi-delete"],
-    ],
     items: [
       {
-        icon: "mdi-wifi",
-        text: "Wifi",
+        icon: "mdi-home",
+        text: "Inicio",
         redirect: "/",
       },
       {
-        icon: "mdi-bluetooth",
-        text: "Bluetooth",
-        redirect: "/login",
+        icon: "mdi-inbox-arrow-down",
+        text: "Pedidos",
+        redirect: "/orders",
+        children: [
+          ["Pedidos", "", "/a"],
+          ["Preliminares", "", "/b"],
+          ["Carritos abandonados", "", "/c"],
+        ],
       },
       {
-        icon: "mdi-chart-donut",
-        text: "Data Usage",
-        redirect: "/about",
+        icon: "mdi-tag",
+        text: "Productos",
+        redirect: "/products",
+        children: [
+          ["Todos los productos", "", "/d"],
+          ["Inventario", "", "/e"],
+          ["Transferencias", "", "/f"],
+          ["Colecciones", "", "/g"],
+          ["Tarjetas de regalo", "", "/h"],
+        ],
+      },
+      {
+        icon: "mdi-account",
+        text: "Clientes",
+        redirect: "/clients",
+      },
+      {
+        icon: "mdi-signal",
+        text: "Informes y estadisticas",
+        redirect: "/statistics",
+        children: [
+          ["Panel de control", "", "/i"],
+          ["Informes", "", "/j"],
+          ["Vista en tiempo real", "", "/k"],
+        ],
+      },
+      {
+        icon: "mdi-bullhorn",
+        text: "Marketing",
+        redirect: "/marketing",
+        children: [
+          ["Informe general", "", "/l"],
+          ["Campañas de marketing", "", "/m"],
+          ["Automatizaciones", "", "/n"],
+        ],
+      },
+      {
+        icon: "mdi-sale",
+        text: "Descuentos",
+        redirect: "/sale",
+      },
+      {
+        icon: "mdi-apps",
+        text: "Aplicaciones",
+        redirect: "/apps",
       },
     ],
   }),
-  computed: { ...mapState(["user"]) },
+  // computed: { ...mapState(["user"]) },
 };
 </script>
 

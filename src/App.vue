@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <div v-if="user">
+  <v-app id="inspire">
+    <div v-if="!user">
       <!-- Navigation Bar -->
       <nav-bar> </nav-bar>
       <!-- Navigation drawer -->
