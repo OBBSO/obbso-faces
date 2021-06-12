@@ -3,8 +3,12 @@ import App from "./App.vue";
 import vuetify from "./plugins/vuetify";
 import router from "./router";
 import store from "./store/store.js";
+import axios from "axios";
 
 Vue.config.productionTip = false;
+
+axios.defaults.baseURL = "http://localhost:8080/";
+// axios.defaults.baseURL = 'https://intense-springs-55547.herokuapp.com/';
 
 new Vue({
   vuetify,

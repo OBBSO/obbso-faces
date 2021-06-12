@@ -1,10 +1,10 @@
 <template>
   <v-app>
-    <div v-if="!user">
+    <div v-if="user">
       <!-- Navigation Bar -->
       <nav-bar> </nav-bar>
       <!-- Navigation drawer -->
-      <nav-draw></nav-draw>
+      <!-- <nav-draw></nav-draw> -->
     </div>
     <v-main>
       <router-view></router-view>
@@ -15,9 +15,12 @@
 <script>
 import { mapState } from "vuex";
 import NavBar from "./components/NavBar.vue";
-import NavDraw from "./components/NavDraw.vue";
+// import NavDraw from "./components/NavDraw.vue";
 export default {
-  components: { NavBar, NavDraw },
+  components: {
+    NavBar,
+    // NavDraw,
+  },
   data: () => ({}),
   computed: { ...mapState(["user"]) },
 };

@@ -8,7 +8,7 @@
         sm="8"
         class="d-flex justify-center align-center"
       >
-        <v-card tile min-width="80%" elevation="10">
+        <v-card min-width="75%" elevation="10" shaped>
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-card-text></v-card-text>
             <v-card-title class="justify-center display-1">
@@ -20,9 +20,7 @@
                 v-model="username"
                 :rules="[rules.required]"
                 label="Usuario"
-                outlined
                 required
-                dense
               ></v-text-field>
               <v-text-field
                 v-model="password"
@@ -30,9 +28,7 @@
                 :rules="[rules.required]"
                 :type="show ? 'text' : 'password'"
                 label="Contraseña"
-                outlined
                 required
-                dense
                 @click:append="show = !show"
               ></v-text-field>
             </div>
@@ -43,7 +39,6 @@
               </v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
-            <br />
             <v-card-text></v-card-text>
           </v-form>
         </v-card>
@@ -58,13 +53,20 @@ export default {
   mixins: [rules_login],
   data: () => ({
     valid: true,
-    username: "",
-    password: "",
+    username: null,
+    password: null,
     show: false,
   }),
   methods: {
     validate() {
       this.$refs.form.validate();
+      console.log(this.valid);
+      if (this.password == null || this.username == null) return;
+      if (!this.valid) return;
+      this.$emit("dataVerified", {
+        email: this.username,
+        password: this.password,
+      });
     },
   },
 };
