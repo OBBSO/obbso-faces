@@ -7,8 +7,8 @@ import axios from "axios";
 
 Vue.config.productionTip = false;
 
-axios.defaults.baseURL = "http://localhost:8080/";
-// axios.defaults.baseURL = 'https://intense-springs-55547.herokuapp.com/';
+// axios.defaults.baseURL = "http://localhost:8080/";
+axios.defaults.baseURL = "https://obbso-backend.herokuapp.com/";
 
 new Vue({
   vuetify,

@@ -8,7 +8,7 @@
         sm="8"
         class="d-flex justify-center align-center"
       >
-        <v-card min-width="75%" elevation="10" shaped>
+        <v-card min-width="75%" elevation="10" shaped :loading="loading">
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-card-text></v-card-text>
             <v-card-title class="justify-center display-1">
@@ -50,6 +50,12 @@
 <script>
 import { rules_login } from "../mixins/rules.js";
 export default {
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+  },
   mixins: [rules_login],
   data: () => ({
     valid: true,

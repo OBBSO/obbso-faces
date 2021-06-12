@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LoginCard @dataVerified="loginUser($event)"></LoginCard>
+    <LoginCard @dataVerified="loginUser($event)" :loading="loading"></LoginCard>
     <div class="text-center">
       <v-snackbar v-model="snackbar" rounded shaped>
         {{ text }}
@@ -29,7 +29,7 @@ export default {
   methods: {
     loginUser(data) {
       console.log(data);
-
+      this.loading = true;
       this.$store
         .dispatch("login", data)
         .then(() => this.$router.push("/"))

@@ -32,13 +32,17 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit("auth_request");
         axios({
-          url: "/login",
+          url: "public/api/auth/login",
           data: user,
           method: "POST",
         })
           .then((resp) => {
             const token = resp.data.access_token;
+
             localStorage.setItem("token", token);
+            localStorage.setItem("type", resp.data.token_type);
+            localStorage.setItem("expires_in", resp.data.expires_in);
+
             commit("auth_success", resp.data);
             resolve(resp);
           })
