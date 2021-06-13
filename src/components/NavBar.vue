@@ -98,7 +98,7 @@
             </template>
 
             <v-list-item
-              v-for="([title, icon, to], i) in item.children"
+              v-for="([title, to], i) in item.children"
               :to="to"
               :key="i"
               link
@@ -140,9 +140,9 @@ export default {
         text: "Pedidos",
         redirect: "/orders",
         children: [
-          ["Pedidos", "", "/a"],
-          ["Preliminares", "", "/b"],
-          ["Carritos abandonados", "", "/c"],
+          ["Pedidos", "/a", ""],
+          ["Preliminares", "/b", ""],
+          ["Carritos abandonados", "/c", ""],
         ],
       },
       {
@@ -150,11 +150,11 @@ export default {
         text: "Productos",
         redirect: "/products",
         children: [
-          ["Todos los productos", "", "/d"],
-          ["Inventario", "", "/e"],
-          ["Transferencias", "", "/f"],
-          ["Colecciones", "", "/g"],
-          ["Tarjetas de regalo", "", "/h"],
+          ["Todos los productos", "/d", ""],
+          ["Inventario", "/e", ""],
+          ["Transferencias", "/f", ""],
+          ["Colecciones", "/g", ""],
+          ["Tarjetas de regalo", "/h", ""],
         ],
       },
       {
@@ -167,9 +167,9 @@ export default {
         text: "Informes y estadisticas",
         redirect: "/statistics",
         children: [
-          ["Panel de control", "", "/i"],
-          ["Informes", "", "/j"],
-          ["Vista en tiempo real", "", "/k"],
+          ["Panel de control", "/i", ""],
+          ["Informes", "/j", ""],
+          ["Vista en tiempo real", "/k", ""],
         ],
       },
       {
@@ -177,9 +177,9 @@ export default {
         text: "Marketing",
         redirect: "/marketing",
         children: [
-          ["Informe general", "", "/l"],
-          ["Campañas de marketing", "", "/m"],
-          ["Automatizaciones", "", "/n"],
+          ["Informe general", "/l", ""],
+          ["Campañas de marketing", "/m", ""],
+          ["Automatizaciones", "/n", ""],
         ],
       },
       {

@@ -7,7 +7,9 @@
       <!-- <nav-draw></nav-draw> -->
     </div>
     <v-main>
-      <router-view></router-view>
+      <v-slide-y-transition>
+        <router-view></router-view>
+      </v-slide-y-transition>
     </v-main>
   </v-app>
 </template>
