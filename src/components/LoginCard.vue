@@ -59,8 +59,8 @@ export default {
   mixins: [rules_login],
   data: () => ({
     valid: true,
-    username: null,
-    password: null,
+    username: "admin@admin.com",
+    password: "123456",
     show: false,
   }),
   methods: {
@@ -70,7 +70,7 @@ export default {
       if (this.password == null || this.username == null) return;
       if (!this.valid) return;
       this.$emit("dataVerified", {
-        email: this.username,
+        email: this.username, // TODO: Change email to username
         password: this.password,
       });
     },
