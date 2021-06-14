@@ -24,6 +24,11 @@ export default {
       },
     },
   },
+  methods: {
+    onLogout() {
+      this.$store.dispatch("logout");
+    },
+  },
 };
 </script>
 

@@ -1,13 +1,7 @@
 <template>
   <div>
     <v-app-bar app clipped-left flat color="primary" dark>
-      <v-btn
-        @click="
-          mini = !mini;
-          drawer = !drawer;
-        "
-        icon
-      >
+      <v-btn @click="navDrawer()" icon>
         <v-icon>{{ mini ? "mdi-menu" : "mdi-arrow-left" }}</v-icon>
       </v-btn>
       <div class="d-flex align-center">
@@ -29,35 +23,7 @@
           width="100"
         />
       </div>
-
       <v-spacer></v-spacer>
-
-      <!-- <v-menu bottom min-width="20%" rounded offset-y>
-        <template v-slot:activator="{ on }">
-          <v-btn icon x-large v-on="on">
-            <v-avatar color="white" size="48">
-              <span class="white--text text-h5">{{ users.initials }}</span>
-            </v-avatar>
-          </v-btn>
-        </template>
-        <v-card>
-          <v-list-item-content class="justify-center">
-            <div class="mx-auto text-center">
-              <v-avatar color="brown">
-                <span class="white--text text-h5">{{ users.initials }}</span>
-              </v-avatar>
-              <h3>{{ users.fullName }}</h3>
-              <p class="text-caption mt-1">
-                {{ users.email }}
-              </p>
-              <v-divider class="my-3"></v-divider>
-              <v-btn depressed rounded text> Edit Account </v-btn>
-              <v-divider class="my-3"></v-divider>
-              <v-btn depressed rounded text> Disconnect </v-btn>
-            </div>
-          </v-list-item-content>
-        </v-card>
-      </v-menu> -->
     </v-app-bar>
 
     <v-navigation-drawer
@@ -111,6 +77,28 @@
           </v-list-group>
         </div>
       </v-list>
+      <template v-slot:append>
+        <v-list dense nav>
+          <v-list-item to="/settings">
+            <v-list-item-icon>
+              <v-icon v-text="'mdi-cog'"></v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title v-text="'Configuración'"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item link @click="onLogout">
+            <v-list-item-icon>
+              <v-icon v-text="'mdi-logout'"></v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title v-text="'Cerrar sesion'"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </template>
     </v-navigation-drawer>
   </div>
 </template>
@@ -164,7 +152,7 @@ export default {
       },
       {
         icon: "mdi-signal",
-        text: "Informes y estadisticas",
+        text: "Informes y estadísticas",
         redirect: "/statistics",
         children: [
           ["Panel de control", "/i", ""],
@@ -194,6 +182,17 @@ export default {
       },
     ],
   }),
+  methods: {
+    navDrawer() {
+      this.mini = !this.mini;
+      this.drawer = !this.drawer;
+    },
+    onLogout() {
+      this.$store.dispatch("logout").then(() => {
+        this.$router.push("/login");
+      });
+    },
+  },
   // computed: { ...mapState(["user"]) },
 };
 </script>

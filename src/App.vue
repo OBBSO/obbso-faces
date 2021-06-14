@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <div v-if="!user">
+    <div v-if="$store.getters.isLoggedIn">
       <!-- Navigation Bar -->
       <nav-bar> </nav-bar>
       <!-- Navigation drawer -->
@@ -24,6 +24,10 @@ export default {
     // NavDraw,
   },
   data: () => ({}),
+  created() {
+    // await this.$store.dispatch("tryAutoLogin");
+    console.log(this.$store.getters.isLoggedIn + "");
+  },
   computed: { ...mapState(["user"]) },
 };
 </script>
