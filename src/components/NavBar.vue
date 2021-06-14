@@ -2,7 +2,7 @@
   <div>
     <v-app-bar app clipped-left flat color="primary" dark>
       <v-btn @click="navDrawer()" icon>
-        <v-icon>{{ mini ? "mdi-menu" : "mdi-arrow-left" }}</v-icon>
+        <v-icon>{{ !drawer ? "mdi-menu" : "mdi-arrow-left" }}</v-icon>
       </v-btn>
       <div class="d-flex align-center">
         <v-img
@@ -109,8 +109,8 @@ import UserItemList from "./user/UserItemList.vue";
 export default {
   components: { UserItemList },
   data: () => ({
-    drawer: true,
-    mini: true,
+    drawer: false,
+    mini: false,
     user: {
       type: "admin",
       name: "John Doe",
@@ -173,7 +173,7 @@ export default {
       {
         icon: "mdi-sale",
         text: "Descuentos",
-        redirect: "/sale",
+        redirect: "/discounts",
       },
       {
         icon: "mdi-apps",
@@ -184,6 +184,11 @@ export default {
   }),
   methods: {
     navDrawer() {
+      if (this.$vuetify.breakpoint.mobile) {
+        this.drawer = !this.drawer;
+        this.mini = false;
+        return;
+      }
       this.mini = !this.mini;
       this.drawer = !this.drawer;
     },

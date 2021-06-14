@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>Home</v-card-title>
+      <v-card-title>Clients</v-card-title>
       <v-card-text></v-card-text>
     </v-card>
   </v-container>
@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: "Home",
+  name: "Clients",
   data: () => ({}),
 };
 </script>

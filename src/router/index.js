@@ -20,6 +20,58 @@ const routes = [
     },
   },
   {
+    path: "/settings",
+    name: "Settings",
+    component: () => import("../views/Settings.vue"),
+    beforeEnter(to, from, next) {
+      if (store.getters.isLoggedIn) {
+        next();
+        return;
+      } else {
+        next("/login");
+      }
+    },
+  },
+  {
+    path: "/clients",
+    name: "Clients",
+    component: () => import("../views/Clients.vue"),
+    beforeEnter(to, from, next) {
+      if (store.getters.isLoggedIn) {
+        next();
+        return;
+      } else {
+        next("/login");
+      }
+    },
+  },
+  {
+    path: "/discounts",
+    name: "Discounts",
+    component: () => import("../views/Discounts.vue"),
+    beforeEnter(to, from, next) {
+      if (store.getters.isLoggedIn) {
+        next();
+        return;
+      } else {
+        next("/login");
+      }
+    },
+  },
+  {
+    path: "/apps",
+    name: "Apps",
+    component: () => import("../views/AppsIntegrated.vue"),
+    beforeEnter(to, from, next) {
+      if (store.getters.isLoggedIn) {
+        next();
+        return;
+      } else {
+        next("/login");
+      }
+    },
+  },
+  {
     path: "/login",
     name: "Login",
     component: () => import("../views/Login.vue"),
