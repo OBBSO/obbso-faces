@@ -7,6 +7,19 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/account",
+    name: "Account",
+    component: () => import("../views/Account.vue"),
+    beforeEnter(to, from, next) {
+      if (store.getters.isLoggedIn) {
+        next();
+        return;
+      } else {
+        next("/login");
+      }
+    },
+  },
+  {
     path: "/",
     name: "Home",
     component: Home,

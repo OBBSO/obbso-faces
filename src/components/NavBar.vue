@@ -36,7 +36,7 @@
       :mini-variant.sync="mini"
     >
       <v-list dense nav>
-        <user-item-list :user="user"></user-item-list>
+        <UserItemList :user="user" :redirect="'/account'"></UserItemList>
 
         <div v-for="(item, i) in items" :key="i">
           <v-list-item :to="item.redirect" v-if="!item.children">
@@ -115,6 +115,7 @@ export default {
       type: "admin",
       name: "John Doe",
       email: "john.doe@doe.com",
+      photo: "https://randomuser.me/api/portraits/men/81.jpg",
     },
 
     items: [

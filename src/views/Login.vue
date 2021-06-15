@@ -28,7 +28,7 @@ export default {
   }),
   methods: {
     loginUser(data) {
-      console.log(data);
+      // console.log(data);
       this.loading = true;
       this.$store
         .dispatch("login", data)

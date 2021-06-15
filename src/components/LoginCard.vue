@@ -8,7 +8,12 @@
         sm="8"
         class="d-flex justify-center align-center"
       >
-        <v-card min-width="75%" elevation="10" shaped :loading="loading">
+        <v-card
+          min-width="75%"
+          elevation="10"
+          class="rounded-xl"
+          :loading="loading"
+        >
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-card-text></v-card-text>
             <v-card-title class="justify-center display-1">
@@ -59,7 +64,7 @@ export default {
   mixins: [rules_login],
   data: () => ({
     valid: true,
-    username: "admin@admin.com",
+    username: "admin",
     password: "123456",
     show: false,
   }),
@@ -70,7 +75,7 @@ export default {
       if (this.password == null || this.username == null) return;
       if (!this.valid) return;
       this.$emit("dataVerified", {
-        email: this.username, // TODO: Change email to username
+        username: this.username,
         password: this.password,
       });
     },

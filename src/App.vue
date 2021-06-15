@@ -24,9 +24,9 @@ export default {
     // NavDraw,
   },
   data: () => ({}),
-  created() {
-    // await this.$store.dispatch("tryAutoLogin");
-    console.log(this.$store.getters.isLoggedIn + "");
+  mounted() {
+    this.$store.dispatch("tryAutoLogin");
+    // console.log(this.$store.getters.isLoggedIn + "");
   },
   computed: { ...mapState(["user"]) },
 };

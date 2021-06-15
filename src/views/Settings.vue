@@ -1,94 +1,17 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col cols="12">
-        <v-divider></v-divider>
-      </v-col>
-
-      <v-col cols="12">
-        <v-row>
-          <v-col cols="12" md="4" sm="4">
-            <v-card-title>Permisos</v-card-title>
-          </v-col>
-          <v-col cols="12" md="8" sm="8">
-            <v-card class="rounded-xl pa-md-2 mx-lg-auto">
-              <v-card-text class="text-center">
-                <v-row>
-                  <v-col cols="6">
-                    <strong>General</strong>
-                    <div v-for="(gen, i) in general" :key="i">
-                      <v-checkbox
-                        :label="gen.text"
-                        v-model="gen.value"
-                        hide-details
-                      ></v-checkbox>
-                      <div v-if="gen.children">
-                        <v-checkbox
-                          :disabled="!gen.value"
-                          class="pr-6"
-                          v-for="(child, j) in gen.children"
-                          :key="j"
-                          :label="child.text"
-                          v-model="child.value"
-                          hide-details
-                        ></v-checkbox>
-                      </div>
-                    </div>
-                  </v-col>
-
-                  <v-col cols="6">
-                    <strong>Tienda</strong>
-                    <div v-for="(gen, i) in admin" :key="i">
-                      <v-checkbox
-                        :label="gen.text"
-                        v-model="gen.value"
-                        hide-details
-                      ></v-checkbox>
-                      <div v-if="gen.children">
-                        <v-checkbox
-                          :disabled="!gen.value"
-                          v-for="(child, j) in gen.children"
-                          :key="j"
-                          :label="child.text"
-                          v-model="child.value"
-                          hide-details
-                        ></v-checkbox>
-                      </div>
-                    </div>
-                  </v-col>
-                  <v-col cols="6">
-                    <strong>Administracion</strong>
-                    <div v-for="(gen, i) in store" :key="i">
-                      <v-checkbox
-                        :label="gen.text"
-                        v-model="gen.value"
-                        hide-details
-                      ></v-checkbox>
-                      <div v-if="gen.children">
-                        <v-checkbox
-                          :disabled="!gen.value"
-                          v-for="(child, j) in gen.children"
-                          :key="j"
-                          :label="child.text"
-                          v-model="child.value"
-                          hide-details
-                        ></v-checkbox>
-                      </div>
-                    </div>
-                  </v-col>
-                </v-row>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+    <AllowedSites></AllowedSites>
+    
   </v-container>
 </template>
 
 <script>
+import AllowedSites from "../components/AllowedSites.vue";
 export default {
   name: "Settings",
+  components: {
+    AllowedSites,
+  },
   data: () => ({
     admin: [
       {

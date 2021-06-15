@@ -1,7 +1,7 @@
 <template>
-  <v-list-item two-line class="px-0">
+  <v-list-item :to="redirect" :ripple="false" class="px-0">
     <v-list-item-avatar>
-      <img src="https://randomuser.me/api/portraits/men/81.jpg" />
+      <img :src="user.photo" />
     </v-list-item-avatar>
 
     <v-list-item-content>
@@ -20,8 +20,13 @@ export default {
         return {
           name: "Some user name",
           type: "admin",
+          photo: "https://randomuser.me/api/portraits/men/80.jpg",
         };
       },
+    },
+    redirect: {
+      type: String,
+      default: "/",
     },
   },
   methods: {
