@@ -24,8 +24,8 @@ export default {
     // NavDraw,
   },
   data: () => ({}),
-  mounted() {
-    this.$store.dispatch("tryAutoLogin");
+  async beforeCreate() {
+    // await this.$store.dispatch("tryAutoLogin");
     // console.log(this.$store.getters.isLoggedIn + "");
   },
   computed: { ...mapState(["user"]) },

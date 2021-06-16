@@ -7,6 +7,20 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/employee/:employ",
+    name: "Employee",
+    component: () => import("../views/Employee.vue"),
+    beforeEnter(to, from, next) {
+      if (store.getters.isLoggedIn) {
+        next();
+        return;
+      } else {
+        next("/login");
+      }
+    },
+    props: true,
+  },
+  {
     path: "/account",
     name: "Account",
     component: () => import("../views/Account.vue"),

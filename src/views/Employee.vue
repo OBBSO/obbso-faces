@@ -1,0 +1,46 @@
+<template>
+  <v-container>
+    <v-card>
+      <v-card-text>
+        {{ employ }}
+      </v-card-text>
+      <v-card-text>
+        {{ user }}
+      </v-card-text>
+    </v-card>
+    <allowed-sites></allowed-sites>
+  </v-container>
+</template>
+
+<script>
+import axios from "axios";
+import AllowedSites from "../components/AllowedSites.vue";
+export default {
+  components: { AllowedSites },
+  props: {
+    employ: {
+      type: String,
+      default: "-1",
+    },
+  },
+  data: () => ({
+    user: {},
+  }),
+  mounted() {
+    const token = localStorage.getItem("token");
+    const type = localStorage.getItem("type");
+    axios
+      .get("/api/user/" + this.employ, {
+        headers: {
+          Authorization: `${type} ${token}`,
+        },
+      })
+      .then((res) => {
+        this.user = res.data;
+      });
+  },
+};
+</script>
+
+<style>
+</style>

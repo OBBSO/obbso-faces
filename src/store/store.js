@@ -122,12 +122,12 @@ export default new Vuex.Store({
         // const userId = localStorage.getItem("userId");
       });
     },
-    register({ commit }, data) {
+    async registerUSer({ commit }, data) {
       const token = localStorage.getItem("token");
       const type = localStorage.getItem("type");
       return new Promise((resolve, reject) => {
         axios
-          .post("/api/auth/register", data, {
+          .post("/api/user", data, {
             headers: {
               Authorization: `${type} ${token}`,
             },
@@ -137,7 +137,7 @@ export default new Vuex.Store({
             resolve();
           })
           .catch((err) => {
-            reject(err);
+            reject(err.response);
           });
       });
     },

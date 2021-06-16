@@ -16,13 +16,18 @@
           </v-col>
           <v-col cols="12">
             <UserItemList
+              v-for="(user, i) in users"
+              :key="i"
               :user="{
-                name: 'User 1',
+                ...user,
+                name: user.username,
                 type: 'Empleado',
-                photo: 'https://randomuser.me/api/portraits/women/81.jpg',
+                photo:
+                  'https://randomuser.me/api/portraits/women/8' + i + '.jpg',
               }"
-              :redirect="'/employ/2'"
+              :redirect="'/employee/' + user.id"
             ></UserItemList>
+
             <!-- TODO: List of users -->
           </v-col>
         </v-row>
@@ -32,11 +37,28 @@
 </template>
 
 <script>
+import axios from "axios";
 import NewUserDialog from "../components/user/NewUserDialog.vue";
 import UserItemList from "../components/user/UserItemList.vue";
 export default {
   components: { NewUserDialog, UserItemList },
   name: "Clients",
-  data: () => ({}),
+  data: () => ({
+    users: [],
+  }),
+  mounted() {
+    const token = localStorage.getItem("token");
+    const type = localStorage.getItem("type");
+    axios
+      .get("api/user", {
+        headers: {
+          Authorization: `${type} ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        this.users = res.data;
+      });
+  },
 };
 </script>

@@ -15,16 +15,33 @@
           <v-row>
             <v-col cols="12" sm="6" md="6">
               <v-text-field
+                label="Usuario*"
+                required
+                hide-details
+                v-model="user.username"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-text-field
+                label="Contraseña*"
+                required
+                hide-details
+                v-model="user.password"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-text-field
                 label="Nombres*"
                 required
                 hide-details
+                v-model="user.names"
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
               <v-text-field
                 label="Apellidos*"
-                hint="example of helper text only on focus"
                 hide-details
+                v-model="user.surnames"
               ></v-text-field>
             </v-col>
             <!-- <v-col cols="12" sm="6" md="4">
@@ -40,6 +57,7 @@
                 label="Celula de Identidad*"
                 required
                 hide-details
+                v-model="user.ci"
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="6" sm="6">
@@ -47,6 +65,7 @@
                 label="Correo electronico"
                 hide-details
                 required
+                v-model="user.email"
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="6" sm="6">
@@ -54,6 +73,7 @@
                 label="Celular*"
                 hide-details
                 required
+                v-model="user.phone"
               ></v-text-field>
             </v-col>
             <!-- <v-col cols="12" md="6" sm="6">
@@ -68,14 +88,14 @@
             </v-col> -->
           </v-row>
         </v-container>
-        <small>*inica que el campo es requerido</small>
+        <small>*indica que el campo es requerido</small>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="blue darken-1" text @click="dialog = false">
           Cancelar
         </v-btn>
-        <v-btn color="blue darken-1" text @click="dialog = false">
+        <v-btn color="blue darken-1" text @click="createNewUser">
           Guardar
         </v-btn>
       </v-card-actions>
@@ -87,6 +107,7 @@
 export default {
   data: () => ({
     dialog: false,
+    user: {},
   }),
   computed: {},
   methods: {
@@ -95,6 +116,21 @@ export default {
         return "90%";
       }
       return "50%";
+    },
+    createNewUser() {
+      this.user.persona_id = 3;
+      console.log(this.user);
+      this.$store
+        .dispatch("registerUSer", this.user)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          this.dialog = false;
+        });
     },
   },
 };
