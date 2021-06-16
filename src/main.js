@@ -10,66 +10,28 @@ Vue.config.productionTip = false;
 // axios.defaults.baseURL = "http://localhost:8080/";
 axios.defaults.baseURL = "https://obbso-backend.herokuapp.com/";
 
-let isRefreshing = false;
-let subscribers = [];
-
 axios.interceptors.response.use(
   (response) => response,
-  (err) => {
-    const {
-      config,
-      response: { status, data },
-    } = err;
-
-    const originalRequest = config;
-
-    if (data.message === "Missing token") {
-      router.push({ name: "login" });
-      return Promise.reject(false);
+  async (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response.status === 401 &&
+      originalRequest.url.includes("auth/jwt/refresh/")
+    ) {
+      // store.commit("clearUserData");
+      localStorage.removeItem("token");
+      localStorage.removeItem("type");
+      localStorage.removeItem("expiresIn");
+      router.push("/login");
+      return Promise.reject(error);
+    } else if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      await store.dispatch("refreshToken");
+      return axios(originalRequest);
     }
-
-    if (originalRequest.url.includes("login_check")) {
-      return Promise.reject(err);
-    }
-
-    if (status === 401 
-      // && data.message === "Expired token"
-      ) {
-      if (!isRefreshing) {
-        isRefreshing = true;
-        store
-          .dispatch("refresToken")
-          .then(({ status }) => {
-            if (status === 200 || status == 204) {
-              isRefreshing = false;
-            }
-            subscribers = [];
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      }
-
-      const requestSubscribers = new Promise((resolve) => {
-        subscribeTokenRefresh(() => {
-          resolve(axios(originalRequest));
-        });
-      });
-
-      onRefreshed();
-
-      return requestSubscribers;
-    }
+    return Promise.reject(error);
   }
 );
-
-function subscribeTokenRefresh(cb) {
-  subscribers.push(cb);
-}
-
-function onRefreshed() {
-  subscribers.map((cb) => cb());
-}
 
 new Vue({
   vuetify,

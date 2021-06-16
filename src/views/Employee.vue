@@ -8,7 +8,7 @@
         {{ user }}
       </v-card-text>
     </v-card>
-    <allowed-sites></allowed-sites>
+    <allowed-sites :modules="userModules"></allowed-sites>
   </v-container>
 </template>
 
@@ -25,6 +25,7 @@ export default {
   },
   data: () => ({
     user: {},
+    userModules: [],
   }),
   mounted() {
     const token = localStorage.getItem("token");
@@ -37,6 +38,19 @@ export default {
       })
       .then((res) => {
         this.user = res.data;
+      });
+
+    axios
+      .get("api/modulo", {
+        headers: {
+          Authorization: `${type} ${token}`,
+        },
+      })
+      .then((response) => {
+        this.userModules = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
       });
   },
 };

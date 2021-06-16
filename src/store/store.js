@@ -87,40 +87,43 @@ export default new Vuex.Store({
           });
       });
     },
-    refresToken() {
-      return new Promise((resolve, reject) => {
-        const token = localStorage.getItem("token");
-        const type = localStorage.getItem("type");
+    async refreshToken() {
+      // return new Promise((resolve, reject) => {
+      const token = localStorage.getItem("token");
+      const type = localStorage.getItem("type");
 
-        if (!token) {
-          reject("No token");
-          return;
-        }
-        // const expirationDate = localStorage.getItem("expiresIn");
-        // const now = new Date();
-        // if (now >= expirationDate) {
-        //   return;
-        // }
+      // if (!token) {
+      //   reject("No token");
+      //   return;
+      // }
+      // const expirationDate = localStorage.getItem("expiresIn");
+      // const now = new Date();
+      // if (now >= expirationDate) {
+      //   return;
+      // }
 
-        axios
-          .post(
-            "/api/auth/refresh",
-            {},
-            {
-              headers: {
-                Authorization: `${type} ${token}`,
-              },
-            }
-          )
-          .then((resp) => {
-            console.log(resp, "token refreshed");
-            localStorage.setItem("token", resp.data.access_token);
-            localStorage.setItem("type", resp.data.token_type);
-            localStorage.setItem("expiresIn", resp.data.expires_in);
-            resolve();
-          });
-        // const userId = localStorage.getItem("userId");
-      });
+      await axios
+        .post(
+          "/api/auth/refresh",
+          {},
+          {
+            headers: {
+              Authorization: `${type} ${token}`,
+            },
+          }
+        )
+        .then((resp) => {
+          console.log(resp, "token refreshed");
+          localStorage.setItem("token", resp.data.access_token);
+          localStorage.setItem("type", resp.data.token_type);
+          localStorage.setItem("expiresIn", resp.data.expires_in);
+          // resolve(resp);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+      // const userId = localStorage.getItem("userId");
+      // });
     },
     registerUSer({ commit }, data) {
       const token = localStorage.getItem("token");
