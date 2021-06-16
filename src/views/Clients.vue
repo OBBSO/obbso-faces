@@ -7,12 +7,12 @@
 
     <br />
 
-    <v-card>
+    <v-card :loading="loading">
       <v-card-title>Usuarios</v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="12">
-            <NewUserDialog></NewUserDialog>
+            <NewUserDialog @successCreateUser="success($event)"></NewUserDialog>
           </v-col>
           <v-col cols="12">
             <UserItemList
@@ -23,7 +23,11 @@
                 name: user.username,
                 type: 'Empleado',
                 photo:
-                  'https://randomuser.me/api/portraits/women/8' + i + '.jpg',
+                  'https://randomuser.me/api/portraits/' +
+                  (i % 2 == 0 ? 'women' : 'men') +
+                  '/7' +
+                  i +
+                  '.jpg',
               }"
               :redirect="'/employee/' + user.id"
             ></UserItemList>
@@ -45,10 +49,12 @@ export default {
   name: "Clients",
   data: () => ({
     users: [],
+    loading: false,
   }),
   mounted() {
     const token = localStorage.getItem("token");
     const type = localStorage.getItem("type");
+    this.loading = true;
     axios
       .get("api/user", {
         headers: {
@@ -58,7 +64,16 @@ export default {
       .then((res) => {
         console.log(res.data);
         this.users = res.data;
+      })
+      .finally(() => {
+        this.loading = false;
       });
+  },
+  methods: {
+    success(data) {
+      console.log(data);
+      this.users.push(data);
+    },
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card>
+    <v-card :loading="loading">
       <v-card-title></v-card-title>
       <v-card-text>{{ user }}</v-card-text>
     </v-card>
@@ -13,8 +13,10 @@ import axios from "axios";
 export default {
   data: () => ({
     user: {},
+    loading: false,
   }),
   mounted() {
+    this.loading = true;
     axios
       .get("api/auth/profile", {
         headers: {
@@ -24,6 +26,9 @@ export default {
       .then((res) => {
         console.log(res);
         this.user = res.data;
+      })
+      .finally(() => {
+        this.loading = false;
       });
   },
   computed: { ...mapState(["token", "type"]) },

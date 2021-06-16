@@ -16,7 +16,7 @@
 
 <script>
 import { mapState } from "vuex";
-import NavBar from "./components/NavBar.vue";
+import NavBar from "./components/NavBar/NavBar.vue";
 // import NavDraw from "./components/NavDraw.vue";
 export default {
   components: {
@@ -24,7 +24,7 @@ export default {
     // NavDraw,
   },
   data: () => ({}),
-  async beforeCreate() {
+  beforeCreate() {
     // await this.$store.dispatch("tryAutoLogin");
     // console.log(this.$store.getters.isLoggedIn + "");
   },

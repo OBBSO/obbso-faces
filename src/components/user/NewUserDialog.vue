@@ -73,19 +73,9 @@
                 label="Celular*"
                 hide-details
                 required
-                v-model="user.phone"
+                v-model.number="user.phone"
               ></v-text-field>
             </v-col>
-            <!-- <v-col cols="12" md="6" sm="6">
-              <v-text-field label="Email" required></v-text-field>
-            </v-col> -->
-            <!-- <v-col cols="12">
-              <v-text-field
-                label="Password*"
-                type="password"
-                required
-              ></v-text-field>
-            </v-col> -->
           </v-row>
         </v-container>
         <small>*indica que el campo es requerido</small>
@@ -95,9 +85,7 @@
         <v-btn color="blue darken-1" text @click="dialog = false">
           Cancelar
         </v-btn>
-        <v-btn color="blue darken-1" text @click="createNewUser">
-          Guardar
-        </v-btn>
+        <v-btn color="primary" dark @click="createNewUser"> Guardar </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -107,7 +95,15 @@
 export default {
   data: () => ({
     dialog: false,
-    user: {},
+    user: {
+      username: "qwerty",
+      password: "qwerty",
+      names: "fakename",
+      surnames: "fakesurname",
+      ci: 123123,
+      email: "some@email.com",
+      phone: 76543210,
+    },
   }),
   computed: {},
   methods: {
@@ -123,10 +119,15 @@ export default {
       this.$store
         .dispatch("registerUSer", this.user)
         .then((res) => {
-          console.log(res);
+          console.log(res, "success");
+          this.$emit("successCreateUser", {
+            id: 20,
+            persona_id: 1,
+            username: this.user.username,
+          });
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err, "error");
         })
         .finally(() => {
           this.dialog = false;

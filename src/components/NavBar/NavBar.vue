@@ -1,8 +1,16 @@
 <template>
   <div>
     <v-app-bar app clipped-left flat color="primary" dark>
-      <v-btn @click="navDrawer()" icon>
+      <!-- <v-btn @click="navDrawer()" icon>
         <v-icon>{{ !drawer ? "mdi-menu" : "mdi-arrow-left" }}</v-icon>
+      </v-btn> -->
+      <v-btn icon class="mx-1" @click.stop="navDrawer">
+        <template v-if="drawer">
+          <v-icon style="font-size: 28px">mdi-arrow-left</v-icon>
+        </template>
+        <template v-else>
+          <v-icon style="font-size: 28px">mdi-menu</v-icon>
+        </template>
       </v-btn>
       <div class="d-flex align-center">
         <v-img
@@ -33,7 +41,10 @@
       color="white"
       hide-overlay
       :permanent="$vuetify.breakpoint.mdAndUp"
+      :temporary="$vuetify.breakpoint.smAndDown"
       :mini-variant.sync="mini"
+      :mini-variant-width="80"
+      :class="{ 'drawer-mini': !drawer }"
     >
       <v-list dense nav>
         <UserItemList :user="user" :redirect="'/account'"></UserItemList>
@@ -105,7 +116,7 @@
 
 <script>
 // import { mapState } from "vuex";
-import UserItemList from "./user/UserItemList.vue";
+import UserItemList from "../user/UserItemList.vue";
 export default {
   components: { UserItemList },
   data: () => ({
@@ -124,27 +135,27 @@ export default {
         text: "Inicio",
         redirect: "/",
       },
-      {
-        icon: "mdi-inbox-arrow-down",
-        text: "Pedidos",
-        redirect: "/orders",
-        children: [
-          ["Pedidos", "/a", ""],
-          ["Preliminares", "/b", ""],
-          ["Carritos abandonados", "/c", ""],
-        ],
-      },
+      // {
+      //   icon: "mdi-inbox-arrow-down",
+      //   text: "Pedidos",
+      //   redirect: "/orders",
+      //   children: [
+      //     ["Pedidos", "/a", ""],
+      //     ["Preliminares", "/b", ""],
+      //     ["Carritos abandonados", "/c", ""],
+      //   ],
+      // },
       {
         icon: "mdi-tag",
         text: "Productos",
         redirect: "/products",
-        children: [
-          ["Todos los productos", "/d", ""],
-          ["Inventario", "/e", ""],
-          ["Transferencias", "/f", ""],
-          ["Colecciones", "/g", ""],
-          ["Tarjetas de regalo", "/h", ""],
-        ],
+        // children: [
+        //   ["Todos los productos", "/d", ""],
+        //   ["Inventario", "/e", ""],
+        //   ["Transferencias", "/f", ""],
+        //   ["Colecciones", "/g", ""],
+        //   ["Tarjetas de regalo", "/h", ""],
+        // ],
       },
       {
         icon: "mdi-account",
@@ -203,5 +214,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style src="./NavBar.scss" lang="scss"/>

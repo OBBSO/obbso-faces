@@ -87,12 +87,13 @@ export default new Vuex.Store({
           });
       });
     },
-    tryAutoLogin({ commit }) {
-      return new Promise((resolve) => {
+    refresToken() {
+      return new Promise((resolve, reject) => {
         const token = localStorage.getItem("token");
         const type = localStorage.getItem("type");
 
         if (!token) {
+          reject("No token");
           return;
         }
         // const expirationDate = localStorage.getItem("expiresIn");
@@ -116,15 +117,15 @@ export default new Vuex.Store({
             localStorage.setItem("token", resp.data.access_token);
             localStorage.setItem("type", resp.data.token_type);
             localStorage.setItem("expiresIn", resp.data.expires_in);
-            commit("auth_success", resp.data);
             resolve();
           });
         // const userId = localStorage.getItem("userId");
       });
     },
-    async registerUSer({ commit }, data) {
+    registerUSer({ commit }, data) {
       const token = localStorage.getItem("token");
       const type = localStorage.getItem("type");
+      console.log(commit);
       return new Promise((resolve, reject) => {
         axios
           .post("/api/user", data, {
@@ -132,12 +133,11 @@ export default new Vuex.Store({
               Authorization: `${type} ${token}`,
             },
           })
-          .then(() => {
-            commit("success");
-            resolve();
+          .then((res) => {
+            resolve(res);
           })
           .catch((err) => {
-            reject(err.response);
+            reject(err);
           });
       });
     },
