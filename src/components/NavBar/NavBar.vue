@@ -159,7 +159,7 @@ export default {
       },
       {
         icon: "mdi-account",
-        text: "Clientes",
+        text: "Usuarios",
         redirect: "/clients",
       },
       {

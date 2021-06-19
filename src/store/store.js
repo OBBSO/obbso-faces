@@ -9,7 +9,6 @@ export default new Vuex.Store({
     status: "",
     token: localStorage.getItem("token"),
     type: localStorage.getItem("type"),
-    user: null,
   },
   mutations: {
     auth_request(state) {
@@ -18,17 +17,14 @@ export default new Vuex.Store({
     auth_success(state, data) {
       state.status = "success";
       state.token = data.access_token;
-      state.user = data;
+      state.type = data.token_type;
     },
     auth_error(state) {
       state.status = "error";
     },
-    auth_user(state, userData) {
-      state.token = userData.token;
-      // state.userId = userData.userId
-    },
     logout(state) {
       state.status = "";
+      state.type = null;
       state.token = null;
     },
   },
@@ -43,9 +39,8 @@ export default new Vuex.Store({
         })
           .then((resp) => {
             console.log(resp);
-            const token = resp.data.access_token;
 
-            localStorage.setItem("token", token);
+            localStorage.setItem("token", resp.data.access_token);
             localStorage.setItem("type", resp.data.token_type);
             localStorage.setItem("expiresIn", resp.data.expires_in);
 
@@ -55,12 +50,14 @@ export default new Vuex.Store({
           .catch((err) => {
             commit("auth_error");
             localStorage.removeItem("token");
+            localStorage.removeItem("type");
+            localStorage.removeItem("expiresIn");
             reject(err);
           });
       });
     },
 
-    logout({ commit }) {
+    invalidateToken({ commit }) {
       return new Promise((resolve) => {
         const token = localStorage.getItem("token");
         const type = localStorage.getItem("type");
@@ -87,17 +84,23 @@ export default new Vuex.Store({
           });
       });
     },
+    logout({ commit }) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("type");
+      localStorage.removeItem("expiresIn");
+      commit("logout");
+    },
     async refreshToken() {
-      // return new Promise((resolve, reject) => {
       const token = localStorage.getItem("token");
       const type = localStorage.getItem("type");
 
-      // if (!token) {
-      //   reject("No token");
-      //   return;
-      // }
+      if (!token) {
+        console.log("No token");
+        return;
+      }
       // const expirationDate = localStorage.getItem("expiresIn");
-      // const now = new Date();
+      const now = new Date();
+      console.log(now);
       // if (now >= expirationDate) {
       //   return;
       // }
@@ -117,15 +120,17 @@ export default new Vuex.Store({
           localStorage.setItem("token", resp.data.access_token);
           localStorage.setItem("type", resp.data.token_type);
           localStorage.setItem("expiresIn", resp.data.expires_in);
+          return resp;
           // resolve(resp);
         })
         .catch((err) => {
           console.log(err.response);
+          return;
         });
       // const userId = localStorage.getItem("userId");
       // });
     },
-    registerUSer({ commit }, data) {
+    registerUser({ commit }, data) {
       const token = localStorage.getItem("token");
       const type = localStorage.getItem("type");
       console.log(commit);

@@ -87,6 +87,11 @@
                 </v-col> -->
               </v-row>
             </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <!-- <v-btn color="secondary" text>Cancelar</v-btn> -->
+              <v-btn color="primary">Guardar</v-btn>
+            </v-card-actions>
           </v-card>
         </v-col>
       </v-row>

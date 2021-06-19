@@ -10,26 +10,24 @@ Vue.config.productionTip = false;
 // axios.defaults.baseURL = "http://localhost:8080/";
 axios.defaults.baseURL = "https://obbso-backend.herokuapp.com/";
 
+// const interceptor =
 axios.interceptors.response.use(
   (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-    if (
-      error.response.status === 401 &&
-      originalRequest.url.includes("auth/jwt/refresh/")
-    ) {
-      // store.commit("clearUserData");
-      localStorage.removeItem("token");
-      localStorage.removeItem("type");
-      localStorage.removeItem("expiresIn");
-      router.push("/login");
+  (error) => {
+    console.log("Interceptor running");
+    if (error.response.status !== 401) {
       return Promise.reject(error);
-    } else if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      await store.dispatch("refreshToken");
-      return axios(originalRequest);
     }
-    return Promise.reject(error);
+    // axios.interceptors.response.eject(interceptor);
+    const token = localStorage.getItem("token");
+    const type = localStorage.getItem("type");
+    if (token && type) {
+      store.dispatch("logout");
+      router.replace("/login/error");
+      return Promise.reject(error);
+    } else {
+      return Promise.reject(error);
+    }
   }
 );
 

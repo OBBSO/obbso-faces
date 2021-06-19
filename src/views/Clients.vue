@@ -1,11 +1,11 @@
 <template>
   <v-container>
-    <v-card>
+    <!-- <v-card>
       <v-card-title>Clients</v-card-title>
       <v-card-text></v-card-text>
     </v-card>
 
-    <br />
+    <br /> -->
 
     <v-card :loading="loading">
       <v-card-title>Usuarios</v-card-title>

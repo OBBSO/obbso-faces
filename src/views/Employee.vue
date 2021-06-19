@@ -47,7 +47,32 @@ export default {
         },
       })
       .then((response) => {
+        console.log(response);
         this.userModules = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    axios
+      .get("api/permiso", {
+        headers: {
+          Authorization: `${type} ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    axios
+      .get("api/permiso/2", {
+        headers: {
+          Authorization: `${type} ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
       })
       .catch((error) => {
         console.log(error);

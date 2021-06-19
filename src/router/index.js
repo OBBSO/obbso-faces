@@ -88,7 +88,7 @@ const routes = [
   {
     path: "/apps",
     name: "Apps",
-    component: () => import("../views/AppsIntegrated.vue"),
+    component: () => import("../views/IntegratedApps.vue"),
     beforeEnter(to, from, next) {
       if (store.getters.isLoggedIn) {
         next();
@@ -99,9 +99,10 @@ const routes = [
     },
   },
   {
-    path: "/login",
+    path: "/login/:error?",
     name: "Login",
     component: () => import("../views/Login.vue"),
+    props: true,
     beforeEnter(to, from, next) {
       if (!store.getters.isLoggedIn) {
         next();

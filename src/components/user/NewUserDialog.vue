@@ -117,7 +117,7 @@ export default {
       this.user.persona_id = 3;
       console.log(this.user);
       this.$store
-        .dispatch("registerUSer", this.user)
+        .dispatch("registerUser", this.user)
         .then((res) => {
           console.log(res, "success");
           this.$emit("successCreateUser", {
