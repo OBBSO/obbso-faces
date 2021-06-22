@@ -24,11 +24,11 @@
         :timeout="timeout"
       >
         La sesion ha caducado, vuelve a iniciar la sesion
-        <template v-slot:action="{ attrs }">
+        <!-- <template v-slot:action="{ attrs }">
           <v-btn color="primary" text v-bind="attrs" @click="error = false">
             Close
           </v-btn>
-        </template>
+        </template> -->
       </v-snackbar>
     </div>
   </div>

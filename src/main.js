@@ -14,7 +14,7 @@ axios.defaults.baseURL = "https://obbso-backend.herokuapp.com/";
 axios.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.log("Interceptor running");
+    console.warn("Interceptor running");
     if (error.response.status !== 401) {
       return Promise.reject(error);
     }

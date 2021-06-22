@@ -60,9 +60,9 @@ const routes = [
     },
   },
   {
-    path: "/clients",
-    name: "Clients",
-    component: () => import("../views/Clients.vue"),
+    path: "/users",
+    name: "Users",
+    component: () => import("../views/Users.vue"),
     beforeEnter(to, from, next) {
       if (store.getters.isLoggedIn) {
         next();

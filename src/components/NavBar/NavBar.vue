@@ -160,7 +160,7 @@ export default {
       {
         icon: "mdi-account",
         text: "Usuarios",
-        redirect: "/clients",
+        redirect: "/users",
       },
       {
         icon: "mdi-signal",

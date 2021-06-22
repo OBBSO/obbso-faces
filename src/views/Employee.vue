@@ -8,7 +8,13 @@
         {{ user }}
       </v-card-text>
     </v-card>
-    <allowed-sites :modules="userModules"></allowed-sites>
+    <br />
+
+    <allowed-sites
+      :modules="userModules"
+      :allows="userAllows"
+      :roles="userRoles"
+    ></allowed-sites>
   </v-container>
 </template>
 
@@ -26,6 +32,8 @@ export default {
   data: () => ({
     user: {},
     userModules: [],
+    userAllows: [],
+    userRoles: [],
   }),
   mounted() {
     const token = localStorage.getItem("token");
@@ -61,17 +69,19 @@ export default {
       })
       .then((response) => {
         console.log(response);
+        this.userAllows = response.data;
       })
       .catch((error) => {
         console.log(error);
       });
     axios
-      .get("api/permiso/2", {
+      .get("api/role", {
         headers: {
           Authorization: `${type} ${token}`,
         },
       })
       .then((response) => {
+        this.userRoles = response.data;
         console.log(response);
       })
       .catch((error) => {
