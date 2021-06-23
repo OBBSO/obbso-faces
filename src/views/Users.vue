@@ -16,7 +16,7 @@
           <v-col cols="12" md="8" sm="8">
             <v-card :loading="loading">
               <v-card-text>
-                <v-row>
+                <v-row no-gutters>
                   <v-col
                     cols="12"
                     md="6"
@@ -41,7 +41,7 @@
 
                     <!-- TODO: List of users -->
                   </v-col>
-                  <v-col cols="12"> </v-col>
+
                 </v-row>
               </v-card-text>
               <v-card-actions>

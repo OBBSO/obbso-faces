@@ -2,19 +2,12 @@
   <v-container>
     <v-card>
       <v-card-text>
-        {{ employ }}
-      </v-card-text>
-      <v-card-text>
         {{ user }}
       </v-card-text>
     </v-card>
     <br />
 
-    <allowed-sites
-      :modules="userModules"
-      :allows="userAllows"
-      :roles="userRoles"
-    ></allowed-sites>
+    <allowed-sites :employ="employ" :allows="userAllows"></allowed-sites>
   </v-container>
 </template>
 
@@ -34,6 +27,8 @@ export default {
     userModules: [],
     userAllows: [],
     userRoles: [],
+    roles: [],
+    loading: false,
   }),
   mounted() {
     const token = localStorage.getItem("token");
@@ -45,48 +40,93 @@ export default {
         },
       })
       .then((res) => {
+        console.log(res);
         this.user = res.data;
-      });
+        axios
+          .get("api/rol_user", {
+            headers: {
+              Authorization: `${type} ${token}`,
+            },
+          })
+          .then((resp) => {
+            const r = resp.data;
+            console.log(resp);
+            r.map((t) => {
+              if (t.user_id == this.user.id) {
+                this.userRoles.push(t);
+              }
+            });
+            console.log(this.userRoles[0]);
+            axios
+              .get("api/role", {
+                headers: {
+                  Authorization: `${type} ${token}`,
+                },
+              })
+              .then((respo) => {
+                const re = respo.data;
+                re.map((t) => {
+                  if (t.id == this.userRoles[0].rol_id) {
+                    this.roles.push(t);
+                  }
+                });
+                console.log(this.roles);
 
-    axios
-      .get("api/modulo", {
-        headers: {
-          Authorization: `${type} ${token}`,
-        },
+                axios
+                  .get("api/permiso", {
+                    headers: {
+                      Authorization: `${type} ${token}`,
+                    },
+                  })
+                  .then((respon) => {
+                    console.log(respon);
+                    const rees = respon.data;
+                    rees.map((t) => {
+                      if ((rees.rol_id = this.roles[0].id)) {
+                        this.userModules.push(t);
+                      }
+                    });
+                    console.log(this.userModules);
+
+                    axios
+                      .get("api/modulo", {
+                        headers: {
+                          Authorization: `${type} ${token}`,
+                        },
+                      })
+                      .then((respons) => {
+                        const resq = respons.data;
+                        console.log(resq, "mod");
+                        resq.map((t) => {
+                          if (t.id == this.userModules[0].id) {
+                            this.userAllows.push(t);
+                          }
+                        });
+                        console.log(this.userAllows);
+                      })
+                      .catch((error) => {
+                        console.log(error);
+                      });
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          })
+          .catch((error) => {
+            console.log(error.response);
+          });
       })
-      .then((response) => {
-        console.log(response);
-        this.userModules = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
+      .catch((e) => {
+        console.log(e);
+        this.loading = false;
       });
-    axios
-      .get("api/permiso", {
-        headers: {
-          Authorization: `${type} ${token}`,
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        this.userAllows = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    axios
-      .get("api/role", {
-        headers: {
-          Authorization: `${type} ${token}`,
-        },
-      })
-      .then((response) => {
-        this.userRoles = response.data;
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // .finally(() => {
+    //   this.loading = false;
+    // });
   },
 };
 </script>
