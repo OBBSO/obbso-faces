@@ -11,7 +11,7 @@
               <v-row>
                 <v-col cols="!2">
                   <strong>Permisos</strong>
-                  <div v-for="(gen, i) in modules" :key="i">
+                  <div v-for="(gen, i) in allows" :key="i">
                     <v-checkbox
                       :label="gen.titulo"
                       v-model="gen.value"
@@ -24,7 +24,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <!-- <v-btn color="secondary" text>Cancelar</v-btn> -->
-              <v-btn color="primary">Guardar</v-btn>
+              <v-btn color="primary" to="/users">Guardar</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "Settings",
   props: {
@@ -160,30 +159,6 @@ export default {
     ],
     modules: [],
   }),
-  mounted() {
-    const token = localStorage.getItem("token");
-    const type = localStorage.getItem("type");
-    axios
-      .get("api/modulo", {
-        headers: {
-          Authorization: `${type} ${token}`,
-        },
-      })
-      .then((response) => {
-        const mods = response.data;
-        mods.map((t) => {
-          if (this.allows[0].titulo == t.titulo) {
-            t.value = true;
-          } else {
-            t.value = false;
-          }
-
-          this.modules.push(t);
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  },
+  created() {},
 };
 </script>

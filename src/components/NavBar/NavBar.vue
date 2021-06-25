@@ -147,7 +147,7 @@ export default {
       // },
       {
         icon: "mdi-tag",
-        text: "Productos",
+        text: "Inventario",
         redirect: "/products",
         // children: [
         //   ["Todos los productos", "/d", ""],
@@ -164,7 +164,7 @@ export default {
       },
       {
         icon: "mdi-signal",
-        text: "Informes y estadísticas",
+        text: "Empleados",
         redirect: "/statistics",
         children: [
           ["Panel de control", "/i", ""],
@@ -173,24 +173,14 @@ export default {
         ],
       },
       {
-        icon: "mdi-bullhorn",
-        text: "Marketing",
-        redirect: "/marketing",
-        children: [
-          ["Informe general", "/l", ""],
-          ["Campañas de marketing", "/m", ""],
-          ["Automatizaciones", "/n", ""],
-        ],
-      },
-      {
         icon: "mdi-sale",
-        text: "Descuentos",
+        text: "Proveedores",
         redirect: "/discounts",
       },
       {
         icon: "mdi-apps",
-        text: "Aplicaciones",
-        redirect: "/apps",
+        text: "Ventas",
+        redirect: "/sales",
       },
     ],
   }),
@@ -214,4 +204,49 @@ export default {
 };
 </script>
 
-<style src="./NavBar.scss" lang="scss"/>
+<style lang="scss">
+.v-navigation-drawer {
+  .v-navigation-drawer__content {
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: grey;
+      border-radius: 10px;
+      border: none;
+    }
+  }
+
+  &.drawer-mini {
+    .v-list {
+      div,
+      a {
+        &.v-list-item {
+          transition: 250ms all;
+        }
+      }
+    }
+  }
+
+  .subheader {
+    transition: 200ms all;
+  }
+
+  .hide {
+    opacity: 0;
+  }
+
+  .show {
+    opacity: 1;
+  }
+}
+
+.v-navigation-drawer--temporary.v-navigation-drawer--clipped {
+  z-index: 5;
+}
+</style>

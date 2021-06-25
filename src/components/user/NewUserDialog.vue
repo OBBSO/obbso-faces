@@ -5,88 +5,108 @@
         Nuevo usuario
       </v-btn>
     </template>
+
     <v-card>
-      <br />
-      <v-card-title>
-        <span class="text-h5">Datos del usuario</span>
-      </v-card-title>
-      <v-card-text>
-        <v-container>
-          <v-row>
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field
-                label="Usuario*"
-                required
-                hide-details
-                v-model="user.username"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field
-                label="Contraseña*"
-                required
-                hide-details
-                v-model="user.password"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field
-                label="Nombres*"
-                required
-                hide-details
-                v-model="user.names"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field
-                label="Apellidos*"
-                hide-details
-                v-model="user.surnames"
-              ></v-text-field>
-            </v-col>
-            <!-- <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                label="Legal last name*"
-                hint="example of persistent helper text"
-                persistent-hint
-                required
-              ></v-text-field>
-            </v-col> -->
-            <v-col cols="12" md="6" sm="6">
-              <v-text-field
-                label="Celula de Identidad*"
-                required
-                hide-details
-                v-model="user.ci"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="6" sm="6">
-              <v-text-field
-                label="Correo electronico"
-                hide-details
-                required
-                v-model="user.email"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="6" sm="6">
-              <v-text-field
-                label="Celular*"
-                hide-details
-                required
-                v-model.number="user.phone"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-        </v-container>
-        <small>*indica que el campo es requerido</small>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="dialog = false">
-          Cancelar
-        </v-btn>
-        <v-btn color="primary" dark @click="createNewUser"> Guardar </v-btn>
-      </v-card-actions>
+      <v-tabs v-model="tab" background-color="transparent" grow>
+        <v-tab> Nuevo usuario </v-tab>
+        <v-tab> Empleado </v-tab>
+      </v-tabs>
+
+      <v-tabs-items v-model="tab">
+        <v-tab-item>
+          <v-card>
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field
+                      label="Usuario*"
+                      required
+                      hide-details
+                      v-model="user.username"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field
+                      label="Contraseña*"
+                      required
+                      hide-details
+                      v-model="user.password"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field
+                      label="Nombres*"
+                      required
+                      hide-details
+                      v-model="user.names"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field
+                      label="Apellidos"
+                      hide-details
+                      v-model="user.surnames"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+              <small>*indica que el campo es requerido</small>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="dialog = false">
+                Cancelar
+              </v-btn>
+              <v-btn color="primary" dark @click="createNewUser">
+                Guardar
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item>
+          <v-card flat>
+            <v-card-text class="text-center">
+              Selecciona un empleado existente
+            </v-card-text>
+            <v-card-subtitle>
+              <v-list-item-group v-model="employ">
+                <v-row no-gutters>
+                  <v-col cols="12" md="6">
+                    <v-list-item :ripple="false" class="px-0">
+                      <v-list-item-avatar>
+                        <img :src="user.photo" />
+                      </v-list-item-avatar>
+                      <v-list-item-content>
+                        <v-list-item-title>Empleado 2</v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <v-list-item :ripple="false" class="px-0">
+                      <v-list-item-avatar>
+                        <img :src="user.photo" />
+                      </v-list-item-avatar>
+                      <v-list-item-content>
+                        <v-list-item-title>Empleado 1</v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-col>
+                </v-row>
+              </v-list-item-group>
+            </v-card-subtitle>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="dialog = false">
+                Cancelar
+              </v-btn>
+              <v-btn color="primary" dark @click="createNewUser">
+                Guardar
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-tab-item>
+      </v-tabs-items>
     </v-card>
   </v-dialog>
 </template>
@@ -94,6 +114,7 @@
 <script>
 export default {
   data: () => ({
+    employ: null,
     dialog: false,
     user: {
       username: "qwerty",
@@ -104,6 +125,7 @@ export default {
       email: "some@email.com",
       phone: 76543210,
     },
+    tab: null,
   }),
   computed: {},
   methods: {

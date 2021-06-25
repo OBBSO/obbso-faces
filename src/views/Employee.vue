@@ -30,10 +30,10 @@ export default {
     roles: [],
     loading: false,
   }),
-  mounted() {
+  async mounted() {
     const token = localStorage.getItem("token");
     const type = localStorage.getItem("type");
-    axios
+    await axios
       .get("/api/user/" + this.employ, {
         headers: {
           Authorization: `${type} ${token}`,
@@ -95,12 +95,22 @@ export default {
                         },
                       })
                       .then((respons) => {
+                        const mods = [];
+
                         const resq = respons.data;
                         console.log(resq, "mod");
                         resq.map((t) => {
                           if (t.id == this.userModules[0].id) {
-                            this.userAllows.push(t);
+                            mods.push(t);
                           }
+                        });
+                        resq.map((t) => {
+                          if (mods[0].titulo == t.titulo) {
+                            t.value = true;
+                          } else {
+                            t.value = false;
+                          }
+                          this.userAllows.push(t);
                         });
                         console.log(this.userAllows);
                       })
