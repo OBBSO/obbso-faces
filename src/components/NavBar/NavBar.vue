@@ -47,16 +47,16 @@
       :class="{ 'drawer-mini': !drawer }"
     >
       <v-list dense nav>
-        <UserItemList :user="user" :redirect="'/account'"></UserItemList>
+        <UserItemList :user="info" :redirect="'/account'"></UserItemList>
 
-        <div v-for="(item, i) in items" :key="i">
-          <v-list-item :to="item.redirect" v-if="!item.children">
+        <div v-for="(item, i) in modules" :key="i">
+          <v-list-item :to="item.ruta" v-if="!item.children">
             <v-list-item-icon>
-              <v-icon v-text="item.icon"></v-icon>
+              <v-icon v-text="item.vicon"></v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title v-text="item.text"></v-list-item-title>
+              <v-list-item-title v-text="item.modulo"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -115,20 +115,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 // import { mapState } from "vuex";
 import UserItemList from "../user/UserItemList.vue";
 export default {
   components: { UserItemList },
+  props: {
+    modules: { type: Array, default: () => [] },
+  },
   data: () => ({
     drawer: false,
     mini: false,
-    user: {
-      type: "admin",
-      name: "John Doe",
-      email: "john.doe@doe.com",
-      photo: "https://randomuser.me/api/portraits/men/81.jpg",
-    },
-
     items: [
       {
         icon: "mdi-home",
@@ -147,7 +144,7 @@ export default {
       // },
       {
         icon: "mdi-tag",
-        text: "Inventario",
+        text: "Productos",
         redirect: "/products",
         // children: [
         //   ["Todos los productos", "/d", ""],
@@ -158,30 +155,30 @@ export default {
         // ],
       },
       {
-        icon: "mdi-account",
+        icon: "mdi-account-multiple",
         text: "Usuarios",
         redirect: "/users",
       },
-      {
-        icon: "mdi-signal",
-        text: "Empleados",
-        redirect: "/statistics",
-        children: [
-          ["Panel de control", "/i", ""],
-          ["Informes", "/j", ""],
-          ["Vista en tiempo real", "/k", ""],
-        ],
-      },
-      {
-        icon: "mdi-sale",
-        text: "Proveedores",
-        redirect: "/discounts",
-      },
-      {
-        icon: "mdi-apps",
-        text: "Ventas",
-        redirect: "/sales",
-      },
+      // {
+      //   icon: "mdi-signal",
+      //   text: "Empleados",
+      //   redirect: "/statistics",
+      //   children: [
+      //     ["Panel de control", "/i", ""],
+      //     ["Informes", "/j", ""],
+      //     ["Vista en tiempo real", "/k", ""],
+      //   ],
+      // },
+      // {
+      //   icon: "mdi-sale",
+      //   text: "Proveedores",
+      //   redirect: "/discounts",
+      // },
+      // {
+      //   icon: "mdi-apps",
+      //   text: "Ventas",
+      //   redirect: "/sales",
+      // },
     ],
   }),
   methods: {
@@ -200,7 +197,7 @@ export default {
       });
     },
   },
-  // computed: { ...mapState(["user"]) },
+  computed: { ...mapState(["info"]) },
 };
 </script>
 

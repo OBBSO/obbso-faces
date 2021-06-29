@@ -2,12 +2,11 @@
   <v-app id="inspire">
     <div v-if="$store.getters.isLoggedIn">
       <!-- Navigation Bar -->
-      <nav-bar> </nav-bar>
-      <!-- Navigation drawer -->
-      <!-- <nav-draw></nav-draw> -->
+      <nav-bar :modules="modules"> </nav-bar>
     </div>
     <v-main>
       <v-slide-y-transition mode="out-in">
+        <!-- Router View -->
         <router-view></router-view>
       </v-slide-y-transition>
     </v-main>
@@ -17,18 +16,25 @@
 <script>
 import { mapState } from "vuex";
 import NavBar from "./components/NavBar/NavBar.vue";
-// import NavDraw from "./components/NavDraw.vue";
 export default {
   components: {
     NavBar,
-    // NavDraw,
   },
-  data: () => ({}),
+  data: () => ({
+    loading: false,
+  }),
   beforeCreate() {
     // await this.$store.dispatch("tryAutoLogin");
     // console.log(this.$store.getters.isLoggedIn + "");
   },
-  computed: { ...mapState(["user"]) },
+  mounted() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      this.$store.dispatch("updateNavBar");
+      this.$store.dispatch("getUserInfo");
+    }
+  },
+  computed: { ...mapState(["modules"]) },
 };
 </script>
 

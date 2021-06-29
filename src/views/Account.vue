@@ -18,7 +18,7 @@ export default {
   mounted() {
     this.loading = true;
     axios
-      .get("api/auth/profile", {
+      .get("/auth/profile", {
         headers: {
           Authorization: `${this.type} ${this.token}`,
         },

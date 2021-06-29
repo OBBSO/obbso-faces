@@ -7,14 +7,15 @@ import axios from "axios";
 
 Vue.config.productionTip = false;
 
-// axios.defaults.baseURL = "http://localhost:8080/";
-axios.defaults.baseURL = "https://obbso-backend.herokuapp.com/";
+// axios.defaults.baseURL = "http://localhost:8000/";
+axios.defaults.baseURL = "https://obbso-backend.herokuapp.com/api";
 
 // const interceptor =
 axios.interceptors.response.use(
   (response) => response,
   (error) => {
     console.warn("Interceptor running");
+    console.log(error);
     if (error.response.status !== 401) {
       return Promise.reject(error);
     }

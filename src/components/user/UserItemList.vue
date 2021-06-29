@@ -1,12 +1,18 @@
 <template>
-  <v-list-item :to="redirect" :ripple="false" class="px-0">
-    <v-list-item-avatar>
-      <img :src="user.photo" />
+  <v-list-item :to="'/' + redirect" :ripple="false" class="px-0">
+    <v-list-item-avatar v-if="user.imagen != null">
+      <img :src="user.imagen" />
+    </v-list-item-avatar>
+
+    <v-list-item-avatar v-else color="black">
+      <span class="white--text text-h5">{{
+        user.nombres.charAt(0) ? user.nombres.charAt(0) : "DF"
+      }}</span>
     </v-list-item-avatar>
 
     <v-list-item-content>
-      <v-list-item-title>{{ user.name }}</v-list-item-title>
-      <v-list-item-subtitle>{{ user.type }}</v-list-item-subtitle>
+      <v-list-item-title>{{ user.nombres }}</v-list-item-title>
+      <!-- <v-list-item-subtitle>{{ info.type }}</v-list-item-subtitle> -->
     </v-list-item-content>
   </v-list-item>
 </template>
@@ -18,9 +24,9 @@ export default {
       type: Object,
       default: () => {
         return {
-          name: "Some user name",
+          nombres: "Some user name",
           type: "admin",
-          photo: "https://randomuser.me/api/portraits/men/80.jpg",
+          imagen: "https://randomuser.me/api/portraits/men/80.jpg",
         };
       },
     },

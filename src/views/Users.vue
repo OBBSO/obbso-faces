@@ -36,12 +36,11 @@
                           i +
                           '.jpg',
                       }"
-                      :redirect="'/employee/' + user.id"
+                      :redirect="'/employee/' + user.id_user"
                     ></UserItemList>
 
                     <!-- TODO: List of users -->
                   </v-col>
-
                 </v-row>
               </v-card-text>
               <v-card-actions>
@@ -54,7 +53,7 @@
           </v-col>
         </v-row>
       </v-col>
-            <v-col cols="12"></v-col>
+      <v-col cols="12"></v-col>
     </v-row>
   </v-container>
 </template>
@@ -75,7 +74,7 @@ export default {
     const type = localStorage.getItem("type");
     this.loading = true;
     axios
-      .get("api/user", {
+      .get("usuarios", {
         headers: {
           Authorization: `${type} ${token}`,
         },

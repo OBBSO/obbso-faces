@@ -30,113 +30,41 @@ export default {
     roles: [],
     loading: false,
   }),
-  async mounted() {
+  mounted() {
     const token = localStorage.getItem("token");
     const type = localStorage.getItem("type");
-    await axios
-      .get("/api/user/" + this.employ, {
+    // axios
+    //   .get("/api/usuario/" + this.employ, {
+    //     headers: {
+    //       Authorization: `${type} ${token}`,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //     this.user = res.data;
+    //   })
+    //   .catch((e) => {
+    //     console.log(e);
+    //     this.loading = false;
+    //   });
+    // .finally(() => {
+    //   this.loading = false;
+    // });
+    axios
+      .get("auth/permisos", {
         headers: {
           Authorization: `${type} ${token}`,
         },
       })
-      .then((res) => {
-        console.log(res);
-        this.user = res.data;
-        axios
-          .get("api/rol_user", {
-            headers: {
-              Authorization: `${type} ${token}`,
-            },
-          })
-          .then((resp) => {
-            const r = resp.data;
-            console.log(resp);
-            r.map((t) => {
-              if (t.user_id == this.user.id) {
-                this.userRoles.push(t);
-              }
-            });
-            console.log(this.userRoles[0]);
-            axios
-              .get("api/role", {
-                headers: {
-                  Authorization: `${type} ${token}`,
-                },
-              })
-              .then((respo) => {
-                const re = respo.data;
-                re.map((t) => {
-                  if (t.id == this.userRoles[0].rol_id) {
-                    this.roles.push(t);
-                  }
-                });
-                console.log(this.roles);
-
-                axios
-                  .get("api/permiso", {
-                    headers: {
-                      Authorization: `${type} ${token}`,
-                    },
-                  })
-                  .then((respon) => {
-                    console.log(respon);
-                    const rees = respon.data;
-                    rees.map((t) => {
-                      if ((rees.rol_id = this.roles[0].id)) {
-                        this.userModules.push(t);
-                      }
-                    });
-                    console.log(this.userModules);
-
-                    axios
-                      .get("api/modulo", {
-                        headers: {
-                          Authorization: `${type} ${token}`,
-                        },
-                      })
-                      .then((respons) => {
-                        const mods = [];
-
-                        const resq = respons.data;
-                        console.log(resq, "mod");
-                        resq.map((t) => {
-                          if (t.id == this.userModules[0].id) {
-                            mods.push(t);
-                          }
-                        });
-                        resq.map((t) => {
-                          if (mods[0].titulo == t.titulo) {
-                            t.value = true;
-                          } else {
-                            t.value = false;
-                          }
-                          this.userAllows.push(t);
-                        });
-                        console.log(this.userAllows);
-                      })
-                      .catch((error) => {
-                        console.log(error);
-                      });
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          })
-          .catch((error) => {
-            console.log(error.response);
-          });
+      .then((resp) => {
+        // const r = resp.data;
+        console.log(resp);
+        // this.userAllows = r;
       })
-      .catch((e) => {
-        console.log(e);
-        this.loading = false;
+      .catch((error) => {
+        console.log(error);
+        console.log(error.response);
       });
-    // .finally(() => {
-    //   this.loading = false;
-    // });
   },
 };
 </script>
