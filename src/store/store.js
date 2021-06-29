@@ -59,6 +59,7 @@ export default new Vuex.Store({
             localStorage.setItem("user", resp.data.user.id_user);
             commit("auth_success", resp.data);
             this.dispatch("updateNavBar");
+            this.dispatch("getUserInfo");
             resolve(resp);
           })
           .catch((err) => {
@@ -187,9 +188,9 @@ export default new Vuex.Store({
       // });
     },
 
-    getUserInfo({ commit, state }) {
-      axios
-        .get("/usuarios/" + state.user, {
+    async getUserInfo({ commit, state }) {
+      await axios
+        .get("usuarios/" + state.user, {
           headers: {
             Authorization: `${state.type} ${state.token}`,
           },

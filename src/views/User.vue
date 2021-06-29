@@ -9,8 +9,9 @@
 
     <allowed-sites
       :loading="loadingModules"
-      :employ="employ"
+      :employ="user"
       :allows="userAllows"
+      @updateValues="saveAllows($event)"
     ></allowed-sites>
   </v-container>
 </template>
@@ -21,7 +22,7 @@ import AllowedSites from "../components/AllowedSites.vue";
 export default {
   components: { AllowedSites },
   props: {
-    employ: {
+    user: {
       type: String,
       default: "-1",
     },
@@ -55,7 +56,7 @@ export default {
     // });
 
     axios
-      .get("permisos/" + this.employ, {
+      .get("permisos/" + this.user, {
         headers: {
           Authorization: `${type} ${token}`,
         },
@@ -72,6 +73,22 @@ export default {
       .finally(() => {
         this.loadingModules = false;
       });
+  },
+  methods: {
+    saveAllows(data) {
+      console.log(data);
+      const token = localStorage.getItem("token");
+      const type = localStorage.getItem("type");
+      const config = {
+        headers: {
+          Authorization: `${type} ${token}`,
+        },
+      };
+      axios.put("permisos/" + this.user, data, config).then((response) => {
+        console.log(response);
+        this.$router.push({ name: "Users" });
+      });
+    },
   },
 };
 </script>

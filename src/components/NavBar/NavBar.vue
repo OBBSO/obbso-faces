@@ -47,10 +47,10 @@
       :class="{ 'drawer-mini': !drawer }"
     >
       <v-list dense nav>
-        <UserItemList :user="info" :redirect="'/account'"></UserItemList>
+        <UserItemList :user="info" :redirect="'account'"></UserItemList>
 
         <div v-for="(item, i) in modules" :key="i">
-          <v-list-item :to="item.ruta" v-if="!item.children">
+          <v-list-item :to="'/' + item.ruta" v-if="item.estado == 1">
             <v-list-item-icon>
               <v-icon v-text="item.vicon"></v-icon>
             </v-list-item-icon>
@@ -60,18 +60,16 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-group
+          <!-- <v-list-group
             no-action
             v-else
             :value="false"
             :prepend-icon="item.icon"
           >
             <template v-slot:activator>
-              <!-- <v-list-item> -->
-              <!-- <v-list-item-content> -->
+            
               <v-list-item-title v-text="item.text"></v-list-item-title>
-              <!-- </v-list-item-content> -->
-              <!-- </v-list-item> -->
+            
             </template>
 
             <v-list-item
@@ -80,12 +78,12 @@
               :key="i"
               link
             >
-              <!-- <v-list-item-icon>
+              <v-list-item-icon>
                 <v-icon v-text="icon"></v-icon>
-              </v-list-item-icon> -->
+              </v-list-item-icon>
               <v-list-item-title v-text="title"></v-list-item-title>
             </v-list-item>
-          </v-list-group>
+          </v-list-group> -->
         </div>
       </v-list>
       <template v-slot:append>

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card :loading="loading">
-      <v-card-title></v-card-title>
+      <v-card-title>Title</v-card-title>
       <v-card-text>{{ user }}</v-card-text>
     </v-card>
   </v-container>
@@ -18,7 +18,7 @@ export default {
   mounted() {
     this.loading = true;
     axios
-      .get("/auth/profile", {
+      .get("auth/profile", {
         headers: {
           Authorization: `${this.type} ${this.token}`,
         },

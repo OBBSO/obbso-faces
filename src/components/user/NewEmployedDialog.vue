@@ -2,7 +2,7 @@
   <v-dialog v-model="dialog" persistent :max-width="mobileWindow()">
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="primary" dark v-bind="attrs" v-on="on">
-        Nuevo usuario
+        Nuevo empleado
       </v-btn>
     </template>
     <v-card>

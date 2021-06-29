@@ -7,6 +7,33 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/user/:user",
+    name: "User",
+    component: () => import("../views/User.vue"),
+    beforeEnter(to, from, next) {
+      if (store.getters.isLoggedIn) {
+        next();
+        return;
+      } else {
+        next("/login");
+      }
+    },
+    props: true,
+  },
+  {
+    path: "/users",
+    name: "Users",
+    component: () => import("../views/Users.vue"),
+    beforeEnter(to, from, next) {
+      if (store.getters.isLoggedIn) {
+        next();
+        return;
+      } else {
+        next("/login");
+      }
+    },
+  },
+  {
     path: "/employee/:employ",
     name: "Employee",
     component: () => import("../views/Employee.vue"),
@@ -19,6 +46,19 @@ const routes = [
       }
     },
     props: true,
+  },
+  {
+    path: "/employees",
+    name: "Employees",
+    component: () => import("../views/Employees.vue"),
+    beforeEnter(to, from, next) {
+      if (store.getters.isLoggedIn) {
+        next();
+        return;
+      } else {
+        next("/login");
+      }
+    },
   },
   {
     path: "/account",
@@ -112,7 +152,7 @@ const routes = [
     },
   },
   {
-    path: "/about",
+    path: "/products",
     name: "About",
     component: () => import("../views/About.vue"),
     // beforeEnter(to, from, next) {
@@ -129,7 +169,7 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
-  saveScrollPosition: true,
+  // saveScrollPosition: true,
 });
 
 export default router;

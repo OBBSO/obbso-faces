@@ -11,7 +11,7 @@
       <v-col cols="12">
         <v-row>
           <v-col cols="12" md="4" sm="4">
-            <v-card-title>Usuarios</v-card-title>
+            <v-card-title>Empleados</v-card-title>
           </v-col>
           <v-col cols="12" md="8" sm="8">
             <v-card :loading="loading">
@@ -35,9 +35,9 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <NewUserDialog
+                <NewEmployedDialog
                   @successCreateUser="success($event)"
-                ></NewUserDialog>
+                ></NewEmployedDialog>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -50,10 +50,10 @@
 
 <script>
 import axios from "axios";
-import NewUserDialog from "../components/user/NewUserDialog.vue";
 import UserItemList from "../components/user/UserItemList.vue";
+import NewEmployedDialog from "../components/user/NewEmployedDialog.vue";
 export default {
-  components: { NewUserDialog, UserItemList },
+  components: { UserItemList, NewEmployedDialog },
   name: "Clients",
   data: () => ({
     users: [],
@@ -64,7 +64,7 @@ export default {
     const type = localStorage.getItem("type");
     this.loading = true;
     axios
-      .get("usuarios", {
+      .get("empleados", {
         headers: {
           Authorization: `${type} ${token}`,
         },
