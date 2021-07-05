@@ -6,7 +6,7 @@
 
     <v-list-item-avatar v-else color="black">
       <span class="white--text text-h5">{{
-        user.nombres.charAt(0) ? user.nombres.charAt(0) : "DF"
+        user.nombres.charAt(0) ? user.nombres.charAt(0) : ""
       }}</span>
     </v-list-item-avatar>
 

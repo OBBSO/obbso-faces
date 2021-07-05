@@ -34,6 +34,11 @@ export default new Vuex.Store({
       state.type = null;
       state.token = null;
       state.user = null;
+      state.modules = null;
+      state.info = {
+        imagen: null,
+        nombres: "",
+      };
     },
     modules(state, data) {
       state.modules = data;
@@ -156,7 +161,7 @@ export default new Vuex.Store({
       console.log(commit);
       return new Promise((resolve, reject) => {
         axios
-          .post("/user", data, {
+          .post("/usuarios", data, {
             headers: {
               Authorization: `${type} ${token}`,
             },

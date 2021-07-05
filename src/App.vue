@@ -1,5 +1,8 @@
 <template>
-  <v-app id="inspire">
+  <v-app
+    id="inspire"
+    :style="{ background: $vuetify.theme.themes[theme].background }"
+  >
     <div v-if="$store.getters.isLoggedIn">
       <!-- Navigation Bar -->
       <nav-bar :modules="modules"> </nav-bar>
@@ -34,7 +37,12 @@ export default {
       this.$store.dispatch("getUserInfo");
     }
   },
-  computed: { ...mapState(["modules"]) },
+  computed: {
+    theme() {
+      return this.$vuetify.theme.dark ? "dark" : "light";
+    },
+    ...mapState(["modules"]),
+  },
 };
 </script>
 

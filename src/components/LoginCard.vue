@@ -25,6 +25,7 @@
                 v-model="username"
                 :rules="[rules.required]"
                 label="Usuario"
+                @keyup.enter="validate"
                 required
               ></v-text-field>
               <v-text-field
@@ -34,6 +35,7 @@
                 :type="show ? 'text' : 'password'"
                 label="Contraseña"
                 required
+                @keyup.enter="validate"
                 @click:append="show = !show"
               ></v-text-field>
             </div>
