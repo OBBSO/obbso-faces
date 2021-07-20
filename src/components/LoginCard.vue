@@ -1,57 +1,55 @@
 <template>
-  <v-container class="background" fluid pa-0>
-    <v-row align="center" justify="center" style="height: 100vh" dense>
-      <v-col
-        cols="12"
-        lg="6"
-        md="6"
-        sm="8"
-        class="d-flex justify-center align-center"
+  <v-row align="center" justify="center" no-gutters style="height: 100vh" dense>
+    <v-col
+      cols="12"
+      lg="5"
+      md="6"
+      sm="12"
+      class="d-flex justify-center align-center"
+    >
+      <v-card
+        min-width="75%"
+        elevation="10"
+        class="rounded-xl"
+        :loading="loading"
       >
-        <v-card
-          min-width="75%"
-          elevation="10"
-          class="rounded-xl"
-          :loading="loading"
-        >
-          <v-form ref="form" v-model="valid" lazy-validation>
-            <v-card-text></v-card-text>
-            <v-card-title class="justify-center display-1">
+        <v-form ref="form" v-model="valid" lazy-validation>
+          <v-card-text></v-card-text>
+          <v-card-title class="justify-center display-1">
+            Iniciar Sesion
+          </v-card-title>
+          <v-card-text></v-card-text>
+          <div align="center">
+            <v-text-field
+              v-model="username"
+              :rules="[rules.required]"
+              label="Usuario"
+              @keyup.enter="validate"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="password"
+              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+              :rules="[rules.required]"
+              :type="show ? 'text' : 'password'"
+              label="Contraseña"
+              required
+              @keyup.enter="validate"
+              @click:append="show = !show"
+            ></v-text-field>
+          </div>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn :disabled="!valid" color="primary" @click="validate">
               Iniciar Sesion
-            </v-card-title>
-            <v-card-text></v-card-text>
-            <div align="center">
-              <v-text-field
-                v-model="username"
-                :rules="[rules.required]"
-                label="Usuario"
-                @keyup.enter="validate"
-                required
-              ></v-text-field>
-              <v-text-field
-                v-model="password"
-                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[rules.required]"
-                :type="show ? 'text' : 'password'"
-                label="Contraseña"
-                required
-                @keyup.enter="validate"
-                @click:append="show = !show"
-              ></v-text-field>
-            </div>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn :disabled="!valid" color="primary" @click="validate">
-                Iniciar Sesion
-              </v-btn>
-              <v-spacer></v-spacer>
-            </v-card-actions>
-            <v-card-text></v-card-text>
-          </v-form>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+            </v-btn>
+            <v-spacer></v-spacer>
+          </v-card-actions>
+          <v-card-text></v-card-text>
+        </v-form>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -85,11 +83,21 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .background {
   background-color: #f7f7f7;
 }
 .v-text-field {
-  width: 70%;
+  width: 60%;
+}
+@media screen and (max-width: 1920px) {
+  .v-text-field {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 906px) {
+  .v-text-field {
+    width: 80%;
+  }
 }
 </style>

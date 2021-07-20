@@ -49,6 +49,16 @@
       <v-list dense nav>
         <UserItemList :user="info" :redirect="'account'"></UserItemList>
 
+        <v-list-item to="/">
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Inicio</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        
         <div v-for="(item, i) in modules" :key="i">
           <v-list-item :to="'/' + item.ruta" v-if="item.estado == 1">
             <v-list-item-icon>

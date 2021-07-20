@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container fluid pa-0>
     <LoginCard @dataVerified="loginUser($event)" :loading="loading"></LoginCard>
     <div class="text-center">
       <v-snackbar v-model="snackbar" rounded shaped :timeout="timeout">
@@ -31,7 +31,7 @@
         </template> -->
       </v-snackbar>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>
